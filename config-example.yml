@@ -1,0 +1,21 @@
+process_command: "php-fpm" # this command will be run with pgrep to obtain a list of processes to check
+application: "php" # for now only php is supported
+application_version: "74" # php version
+phpspy: # https://github.com/adsr/phpspy
+  threads: 16
+  sleep: 10101010
+  rate: 99
+  limit: 0
+timezone: "Australia/Brisbane" # sets the timezone for the timestamp of the dumped traces
+check_interval: 30 # how often to check for processes
+trace_duration: 10 # the amount of time to let the trace run against the process before killing it
+trace_dir: "/tmp/phunter" # where traces will be placed
+docker: false # if running against processes running inside a docker container this will include the container name in the trace
+dryrun: false # this will
+threshold_params:
+  cpu_threshold: 200 # cpu util to start tracing (taken from the output of top)
+  cpu_trigger_count: 3 # how many times the cpu threshold should be hit before starting a trace
+  cpu_trigger_delay: 5 # how long to wait in between checks until the trigger count is reached for cpu
+  rss_threshold: 100 # memory threshold in KiB
+  rss_trigger_count: 3 # how many times the memory threshold should be hit before starting a trace
+  rss_trigger_delay: 5 # how long to wait in between checks until the trigger count is reached for memory

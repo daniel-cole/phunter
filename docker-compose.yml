@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  phpfpm:
+    image: richarvey/nginx-php-fpm
+    ports:
+      - 80:80
+
+  phunter:
+    image: phunter:latest
+    pid: "host"
+    environment:
+      - PHUNTER_CONFIG_FILE=/config-example.yml
+      - PHUNTER_LOG_LEVEL=DEBUG
+    ports:
+      - 9000:9000
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - ${PWD}/config-example.yml:/config-example.yml:Z
